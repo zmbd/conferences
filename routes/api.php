@@ -19,6 +19,9 @@ use App\Http\Controllers\ConferenceController;
 //     return $request->user();
 // });
 
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/conferences', [ConferenceController::class, 'store']);
     Route::put('/conferences/{id}', [ConferenceController::class, 'update']);
