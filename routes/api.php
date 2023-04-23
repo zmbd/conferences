@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ConferenceController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,8 +25,11 @@ Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanc
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/conferences', [ConferenceController::class, 'store']);
-    Route::put('/conferences/{id}', [ConferenceController::class, 'update']);
-    Route::delete('/conferences/{id}', [ConferenceController::class, 'destroy']);
+    Route::put('/conferences/{conference}', [ConferenceController::class, 'update']);
+    Route::delete('/conferences/{conference}', [ConferenceController::class, 'destroy']);
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
 });
 
 Route::get('/conferences', [ConferenceController::class, 'index']);

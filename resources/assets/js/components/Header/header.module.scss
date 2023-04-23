@@ -3,5 +3,14 @@
   display: inline-flex;
   justify-content: right;
   align-items: center;
-  padding-bottom: 300px;
+  margin-bottom: 300px;
+  background-color: #f0f0f0;
+
+  .actionBtn {
+    padding: 15px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }

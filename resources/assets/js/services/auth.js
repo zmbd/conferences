@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useAuth } from '../context/AuthContext';
 
 export const loginUser = async (email, password) => {
   try {
@@ -28,7 +29,7 @@ export const getProtectedData = async () => {
       },
     });
 
-    console.log('Protected data:', response.data);
+    return response.data;
   } catch (error) {
     console.error('Error fetching protected data:', error.response.data.message);
   }

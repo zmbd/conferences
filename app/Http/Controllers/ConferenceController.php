@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Conference;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ConferenceController extends Controller
@@ -37,10 +38,10 @@ class ConferenceController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'date' => 'required|date',
         ]);
     
         $conference = new Conference($request->all());
+        $conference->date = now();
         $conference->user_id = auth()->id();
         $conference->save();
     
@@ -80,11 +81,12 @@ class ConferenceController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'date' => 'required|date',
         ]);
     
-        $conference = Conference::findOrFail($id);
-        $this->authorize('update', $conference);
+        if (auth()->id() !== $conference->user_id && !auth()->user()->is_admin) {
+            return response()->json(['message' => 'Forbidden'], 403);
+        }
+    
         $conference->update($request->all());
     
         return response()->json(['message' => 'Conference updated successfully', 'conference' => $conference]);
@@ -96,11 +98,13 @@ class ConferenceController extends Controller
      * @param  \App\Models\Conference  $conference
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id) {
-        $conference = Conference::findOrFail($id);
-        $this->authorize('delete', $conference);
+    public function destroy(Conference $conference) {
+        if (auth()->id() !== $conference->user_id && !auth()->user()->is_admin) {
+            return response()->json(['message' => 'Forbidden'], 403);
+        }
+    
         $conference->delete();
-
-        return response()->json(['message' => 'Conference deleted successfully']);
+    
+        return response()->json(['message' => 'Conference deleted successfully'], 200);
     }
 }
