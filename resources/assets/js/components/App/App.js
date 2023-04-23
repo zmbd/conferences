@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import ConferenceList from '../ConferencesList/ConferencesList';
 import Header from '../Header/Header';
-
-import styles from './app.module.scss';
 import Login from '../Login/Login';
 import { AuthProvider, useAuth } from '../../context/AuthContext';
 import axios from 'axios';
+
+import styles from './app.module.scss';
 
 export default function App() {
   const { user, setUser } = useAuth();
@@ -70,7 +70,9 @@ export default function App() {
 if (document.getElementById('app')) {
   ReactDOM.render(
     <AuthProvider>
-      <App />
+      <UserProvider>
+        <App />
+      </UserProvider>
     </AuthProvider>,
    document.getElementById('app'));
 }

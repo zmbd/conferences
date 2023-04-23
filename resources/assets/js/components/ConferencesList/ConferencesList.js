@@ -12,6 +12,7 @@ const ConferenceList = () => {
   const [conferences, setConferences] = useState([]);
   const [editingConference, setEditingConference] = useState(null);
   const [showAddNewConferenceForm, setShowAddNewConferenceForm] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchConferences = async () => {
@@ -24,6 +25,8 @@ const ConferenceList = () => {
     };
 
     fetchConferences();
+
+    setTimeout(() => setIsLoading(false), 750);
   }, [showAddNewConferenceForm]);
 
   const editConference = (conference) => {
@@ -59,7 +62,7 @@ const ConferenceList = () => {
     setShowAddNewConferenceForm(false);
   }
 
-  if (!conferences) return <>Loading...</>;
+  if (!conferences || isLoading) return <>Loading...</>;
 
   return (
     <>
