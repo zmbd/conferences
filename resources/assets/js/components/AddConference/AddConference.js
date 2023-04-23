@@ -1,9 +1,9 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import styles from './addconference.module.scss';
 
 const AddConference = (props) => {
-  const { handleAddNewConferenceDisplay, conference } = props;
+  const { handleAddNewConferenceDisplay, conference, handleEditingConferenceReset } = props;
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -29,6 +29,8 @@ const AddConference = (props) => {
         }, {
           headers,
         });
+
+        handleEditingConferenceReset();
       } else {
         await axios.post('/api/conferences', {
           title,

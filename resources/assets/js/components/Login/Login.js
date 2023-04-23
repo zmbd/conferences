@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { loginUser } from '../../services/auth';
 
 import styles from './login.module.scss'
 import { useAuth } from '../../context/AuthContext';

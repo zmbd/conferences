@@ -24,7 +24,7 @@ const ConferenceList = () => {
     };
 
     fetchConferences();
-  }, []);
+  }, [showAddNewConferenceForm]);
 
   const editConference = (conference) => {
     setEditingConference(conference);
@@ -51,11 +51,13 @@ const ConferenceList = () => {
     }
   };
 
+  const handleEditingConferenceReset = () => {
+    setEditingConference(null);
+  }
+
   const handleAddNewConferenceDisplay = () => {
     setShowAddNewConferenceForm(false);
   }
-
-  const handleConferencesChange = (newConference) => [...conferences, newConference];
 
   if (!conferences) return <>Loading...</>;
 
@@ -64,7 +66,7 @@ const ConferenceList = () => {
       <h2>Conferences</h2>
       {user && !showAddNewConferenceForm && <button onClick={() => setShowAddNewConferenceForm(true)}>Add new conference</button>}
       {showAddNewConferenceForm && (
-        <AddConference handleAddNewConferenceDisplay={handleAddNewConferenceDisplay} conference={editingConference} />
+        <AddConference handleAddNewConferenceDisplay={handleAddNewConferenceDisplay} conference={editingConference} handleEditingConferenceReset={handleEditingConferenceReset} />
       )}
       {!showAddNewConferenceForm && <div className={styles.conferencesContainer}>
         {conferences.map((conference) => (
