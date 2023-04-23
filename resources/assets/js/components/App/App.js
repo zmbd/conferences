@@ -4,7 +4,6 @@ import ConferenceList from '../ConferencesList/ConferencesList';
 import Header from '../Header/Header';
 
 import styles from './app.module.scss';
-import { getProtectedData } from '../../services/auth';
 import Login from '../Login/Login';
 import { AuthProvider, useAuth } from '../../context/AuthContext';
 import axios from 'axios';
